@@ -6,8 +6,8 @@ use Core\Router;
 use Core\Validator\Validate;
 use Core\View;
 
-die("strict_types=1");
 Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
+die("strict_types=1");
 Router::staticResource("js", "/index.script", "Error.js");
 Router::staticResource("img", "/index.image", "wallet_1.gif");
 
