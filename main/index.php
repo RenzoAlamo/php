@@ -1,13 +1,12 @@
 <?php
 
-die("strict_types=1");
-
 require_once __DIR__ . "/../Config/autoload.php";
 
 use Core\Router;
 use Core\Validator\Validate;
 use Core\View;
 
+die("strict_types=1");
 Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
 Router::staticResource("js", "/index.script", "Error.js");
 Router::staticResource("img", "/index.image", "wallet_1.gif");
