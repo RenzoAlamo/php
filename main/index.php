@@ -7,16 +7,16 @@ use Core\Validator\Validate;
 use Core\View;
 
 // die(json_encode(["base_folder" => base_folder, "root" => root]));
-die(json_encode(Router::getRoutes()));
-Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
-Router::staticResource("js", "/index.script", "Error.js");
-Router::staticResource("img", "/index.image", "wallet_1.gif");
+// Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
+// Router::staticResource("js", "/index.script", "Error.js");
+// Router::staticResource("img", "/index.image", "wallet_1.gif");
 
 Router::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
   // return View::render("index");
   return $_SERVER;
 });
+die(json_encode(Router::getRoutes()));
 
 Router::get("/contact", function () {
   $validate = new Validate();
