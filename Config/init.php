@@ -8,7 +8,7 @@ $_STYLES = [];
 $_SCRIPTS = [];
 $_MULTIMEDIA = [];
 
-define("production", false);
+define("production", true);
 define("base_folder", "");
 define("root", $_SERVER["DOCUMENT_ROOT"] . base_folder);
 
