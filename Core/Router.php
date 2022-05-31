@@ -113,7 +113,7 @@ class Router
    * @param string $path
    * @param string|array|callable $action
    */
-  private function addRoute($method, $path, $action)
+  private static function addRoute($method, $path, $action)
   {
     die("Not implemented yet!");
     $params = [];
