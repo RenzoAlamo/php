@@ -6,8 +6,9 @@ use Core\Router;
 use Core\Validator\Validate;
 use Core\View;
 
+// die(json_encode(["base_folder" => base_folder, "root" => root]));
+die(json_encode(Router::getRoutes()));
 Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
-die(json_encode(["base_folder" => base_folder, "root" => root]));
 Router::staticResource("js", "/index.script", "Error.js");
 Router::staticResource("img", "/index.image", "wallet_1.gif");
 
