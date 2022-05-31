@@ -16,7 +16,6 @@ class Router
    */
   public static function get($path, $action)
   {
-    die("Not implemented yet!");
     self::addRoute("GET", $path, $action);
   }
 
@@ -116,6 +115,7 @@ class Router
    */
   private function addRoute($method, $path, $action)
   {
+    die("Not implemented yet!");
     $params = [];
     $path = preg_replace_callback("/{((\w+)(:([^}]+))?)}/", function ($match) use (&$params) {
       array_push($params, $match[2]);
