@@ -16,7 +16,6 @@ Router::get("/", function () {
   // return View::render("index");
   return $_SERVER;
 });
-die(json_encode(Router::getRoutes()));
 
 Router::get("/contact", function () {
   $validate = new Validate();

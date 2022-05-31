@@ -115,7 +115,6 @@ class Router
    */
   private static function addRoute($method, $path, $action)
   {
-    die("Not implemented yet!");
     $params = [];
     $path = preg_replace_callback("/{((\w+)(:([^}]+))?)}/", function ($match) use (&$params) {
       array_push($params, $match[2]);
@@ -141,7 +140,6 @@ class Router
 
   public static function run()
   {
-    // die("Router::run() is not implemented yet.");
     global $_PARAMS;
     $_PARAMS = isset($_PARAMS) ? $_PARAMS : [];
 
