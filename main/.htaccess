@@ -1,0 +1,10 @@
+# DirectoryIndex index.php
+
+# Enable apache rewrite engine
+RewriteEngine on
+
+#Set your rewrite base
+RewriteBase /php/VercelRouter/main
+
+#Push every request to index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
