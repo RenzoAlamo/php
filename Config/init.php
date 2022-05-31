@@ -9,7 +9,7 @@ $_SCRIPTS = [];
 $_MULTIMEDIA = [];
 
 define("production", false);
-define("base_folder", "/php/VercelRouter");
+define("base_folder", "");
 define("root", $_SERVER["DOCUMENT_ROOT"] . base_folder);
 
 if (production) {
