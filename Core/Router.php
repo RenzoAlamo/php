@@ -16,6 +16,7 @@ class Router
    */
   public static function get($path, $action)
   {
+    die("Not implemented yet!");
     self::addRoute("GET", $path, $action);
   }
 
@@ -140,7 +141,7 @@ class Router
 
   public static function run()
   {
-    die("Router::run() is not implemented yet.");
+    // die("Router::run() is not implemented yet.");
     global $_PARAMS;
     $_PARAMS = isset($_PARAMS) ? $_PARAMS : [];
 
