@@ -16,7 +16,7 @@
 
 use Core\View;
 
-echo View::getContent(__DIR__ . "/../index.php");
+echo View::getContent(root . "/main/index.php");
 ?>
     </pre>
   </code>
