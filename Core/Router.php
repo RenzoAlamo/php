@@ -140,6 +140,7 @@ class Router
 
   public static function run()
   {
+    die("Router::run() is not implemented yet.");
     global $_PARAMS;
     $_PARAMS = isset($_PARAMS) ? $_PARAMS : [];
 
