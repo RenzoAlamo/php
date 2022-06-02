@@ -29,14 +29,14 @@ Router::get("/contact", function () {
   }
 });
 
-// Router::prefix("/api", function () {
-//   Router::get("/", function () {
-//     return "API";
-//   });
-//   Router::get("/users", function () {
-//     return "API Users";
-//   });
-// });
+Router::prefix("/api", function () {
+  Router::get("/", function () {
+    return "API";
+  });
+  Router::get("/users", function () {
+    return "API Users";
+  });
+});
 
 Router::post("/asd/qwe/{id}", function ($id) {
   $validate = new Validate(true);
