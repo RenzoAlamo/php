@@ -37,7 +37,7 @@ Router::prefix("/api", function () {
     Router::get("/uno", function () {
       return "User";
     });
-    Router::prefix("/posts", function ($id) {
+    Router::prefix("/posts", function () {
       Router::get("/", function ($id) {
         return "User $id";
       });
