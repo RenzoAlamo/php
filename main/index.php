@@ -49,23 +49,23 @@ Router::prefix("/api", function () {
     Router::delete("/{id}", function ($id) {
       return "User $id";
     });
-    Router::prefix("/{id}/posts", function ($id) {
-      Router::get("/", function ($id) {
-        return "User $id";
-      });
-      Router::get("/{id}", function ($id) {
-        return "User $id";
-      });
-      Router::post("/", function ($id) {
-        return "User $id";
-      });
-      Router::put("/{id}", function ($id) {
-        return "User $id";
-      });
-      Router::delete("/{id}", function ($id) {
-        return "User $id";
-      });
-    });
+    // Router::prefix("/{id}/posts", function ($id) {
+    //   Router::get("/", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Router::get("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Router::post("/", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Router::put("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Router::delete("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    // });
   });
 });
 
