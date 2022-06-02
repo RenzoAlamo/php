@@ -20,8 +20,8 @@ class Router
    */
   public static function prefix($prefix, $callback)
   {
-    die("Not implemented yet.");
     if (!is_string($prefix) || !($callback instanceof Closure)) return;
+    die("Not implemented yet.");
     $prefix = trim($prefix, " /");
     if (strlen($prefix) > 0) {
       $prefix = "/$prefix";
