@@ -12,8 +12,9 @@ Router::staticResource("img", "/index.image", "wallet_1.gif");
 
 Router::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
-  return View::render("index");
+  // return View::render("index");
   // return $_SERVER;
+  return array_keys(Router::getRoutes());
 });
 
 Router::get("/contact", function () {
@@ -26,6 +27,15 @@ Router::get("/contact", function () {
   } else {
     return ["response" => "OK"];
   }
+});
+
+Router::prefix("/api", function () {
+  Router::get("/", function () {
+    return "API";
+  });
+  Router::get("/users", function () {
+    return "API Users";
+  });
 });
 
 Router::post("/asd/qwe/{id}", function ($id) {

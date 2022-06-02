@@ -2,21 +2,43 @@
 
 namespace Core;
 
+use Closure;
+
 class Router
 {
 
+  private static $prefix = "";
   private static $routes = [];
 
   private function __construct()
   {
   }
+
+  /**
+   * @param string prefix The prefix to use for the routes.
+   * @param Closure callback The function to be called when the route is matched.
+   */
+  public static function prefix($prefix, $callback)
+  {
+    if (!is_string($prefix) || !($callback instanceof Closure)) return;
+    $prefix = trim($prefix, " /");
+    if (strlen($prefix) > 0) {
+      $prefix = "/$prefix";
+    }
+    self::$prefix += $prefix;
+    $callback();
+    if (strlen(self::$prefix) > 0) {
+      self::$prefix = substr(self::$prefix, 0, -strlen($prefix));
+    }
+  }
+
   /**
    * @param string $path
    * @param string|array|callable $action
    */
   public static function get($path, $action)
   {
-    self::addRoute("GET", $path, $action);
+    return self::addRoute("GET", $path, $action);
   }
 
   /**
@@ -25,7 +47,7 @@ class Router
    */
   public static function post($path, $action)
   {
-    self::addRoute("POST", $path, $action);
+    return self::addRoute("POST", $path, $action);
   }
 
   /**
@@ -34,7 +56,7 @@ class Router
    */
   public static function put($path, $action)
   {
-    self::addRoute("PUT", $path, $action);
+    return self::addRoute("PUT", $path, $action);
   }
 
   /**
@@ -43,7 +65,7 @@ class Router
    */
   public static function delete($path, $action)
   {
-    self::addRoute("DELETE", $path, $action);
+    return self::addRoute("DELETE", $path, $action);
   }
 
   // public function prefix($prefix, $action)
@@ -116,6 +138,10 @@ class Router
   private static function addRoute($method, $path, $action)
   {
     $params = [];
+    $path = self::$prefix . "/" . trim($path, " /");
+    if (strlen($path) !== 1) {
+      $path = rtrim($path, "/");
+    }
     $path = preg_replace_callback("/{((\w+)(:([^}]+))?)}/", function ($match) use (&$params) {
       array_push($params, $match[2]);
       return $match[4] ?? "([^\/]+)";
