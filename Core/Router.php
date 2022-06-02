@@ -26,8 +26,8 @@ class Router
       $prefix = "/$prefix";
     }
     self::$prefix .= $prefix;
-    die("prefix: $prefix");
     $callback();
+    die("prefix: $prefix");
     if (strlen(self::$prefix) > 0) {
       self::$prefix = substr(self::$prefix, 0, strlen(self::$prefix) - strlen($prefix));
     }
