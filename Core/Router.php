@@ -21,12 +21,12 @@ class Router
   public static function prefix($prefix, $callback)
   {
     if (!is_string($prefix) || !($callback instanceof Closure)) return;
-    die("Not implemented yet.");
     $prefix = trim($prefix, " /");
     if (strlen($prefix) > 0) {
       $prefix = "/$prefix";
     }
     self::$prefix += $prefix;
+    die("Not implemented yet.");
     $callback();
     if (strlen(self::$prefix) > 0) {
       self::$prefix = substr(self::$prefix, 0, strlen(self::$prefix) - strlen($prefix));
