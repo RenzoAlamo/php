@@ -34,38 +34,26 @@ Router::prefix("/api", function () {
     return "API";
   });
   Router::prefix("/user", function () {
-    Router::get("/", function () {
+    Router::get("/uno", function () {
       return "User";
     });
-    Router::get("/{id}", function ($id) {
-      return "User $id";
+    Router::prefix("/posts", function ($id) {
+      Router::get("/", function ($id) {
+        return "User $id";
+      });
+      Router::get("/{id}", function ($id) {
+        return "User $id";
+      });
+      Router::post("/", function ($id) {
+        return "User $id";
+      });
+      Router::put("/{id}", function ($id) {
+        return "User $id";
+      });
+      Router::delete("/{id}", function ($id) {
+        return "User $id";
+      });
     });
-    Router::post("/", function () {
-      return "User";
-    });
-    Router::put("/{id}", function ($id) {
-      return "User $id";
-    });
-    Router::delete("/{id}", function ($id) {
-      return "User $id";
-    });
-    // Router::prefix("/{id}/posts", function ($id) {
-    //   Router::get("/", function ($id) {
-    //     return "User $id";
-    //   });
-    //   Router::get("/{id}", function ($id) {
-    //     return "User $id";
-    //   });
-    //   Router::post("/", function ($id) {
-    //     return "User $id";
-    //   });
-    //   Router::put("/{id}", function ($id) {
-    //     return "User $id";
-    //   });
-    //   Router::delete("/{id}", function ($id) {
-    //     return "User $id";
-    //   });
-    // });
   });
 });
 
