@@ -34,23 +34,35 @@ Router::prefix("/api", function () {
     return "API";
   });
   Router::prefix("/user", function () {
-    Router::get("/uno", function () {
+    Router::get("/", function () {
       return "User";
+    });
+    Router::get("/{id:(\d+)}", function ($id) {
+      return "User $id";
+    });
+    Router::post("/", function () {
+      return "User";
+    });
+    Router::put("/{id:(\d+)}", function ($id) {
+      return "User $id";
+    });
+    Router::delete("/{id:(\d+)}", function ($id) {
+      return "User $id";
     });
     Router::prefix("/posts", function () {
       Router::get("/", function ($id) {
         return "User $id";
       });
-      Router::get("/{id}", function ($id) {
+      Router::get("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
       Router::post("/", function ($id) {
         return "User $id";
       });
-      Router::put("/{id}", function ($id) {
+      Router::put("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
-      Router::delete("/{id}", function ($id) {
+      Router::delete("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
     });
