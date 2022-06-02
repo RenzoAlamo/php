@@ -25,6 +25,7 @@ class Router
     if (strlen($prefix) > 0) {
       $prefix = "/$prefix";
     }
+    die("prefix: $prefix");
     self::$prefix .= $prefix;
     $callback();
     if (strlen(self::$prefix) > 0) {
@@ -142,6 +143,7 @@ class Router
     if (strlen($path) !== 1) {
       $path = rtrim($path, "/");
     }
+    // /{([a-zA-Z](\w*[a-zA-Z])?)}/g
     $path = preg_replace_callback("/{((\w+)(:([^}]+))?)}/", function ($match) use (&$params) {
       array_push($params, $match[2]);
       return $match[4] ?? "([^\/]+)";
