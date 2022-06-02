@@ -25,8 +25,7 @@ class Router
     if (strlen($prefix) > 0) {
       $prefix = "/$prefix";
     }
-    self::$prefix += $prefix;
-    die("Not implemented yet.");
+    self::$prefix .= $prefix;
     $callback();
     if (strlen(self::$prefix) > 0) {
       self::$prefix = substr(self::$prefix, 0, strlen(self::$prefix) - strlen($prefix));
