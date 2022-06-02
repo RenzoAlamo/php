@@ -33,8 +33,13 @@ Router::prefix("/api", function () {
   Router::get("/", function () {
     return "API";
   });
-  Router::get("/users", function () {
-    return "API Users";
+  Router::prefix("/user", function () {
+    Router::get("/", function () {
+      return "User";
+    });
+    Router::get("/{id}", function ($id) {
+      return "User $id";
+    });
   });
 });
 
