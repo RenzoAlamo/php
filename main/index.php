@@ -6,8 +6,8 @@ use Core\Router\Route;
 use Core\Validator\Validate;
 use Core\View;
 
-die("die()");
 Route::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
+die("die()");
 Route::staticResource("js", "/index.script", "Error.js");
 Route::staticResource("img", "/index.image", "wallet_1.gif");
 
