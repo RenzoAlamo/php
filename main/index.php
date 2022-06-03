@@ -69,16 +69,16 @@ Route::prefix("/api", function () {
   // });
 });
 
-Route::post("/asd/qwe/{id}", function () {
-  $validate = new Validate(true);
-  $validate->get("some", false)->number()->decimal();
-  $validate->get("email")->string()->email();
-  if ($validate->hasErrors()) {
-    return $validate->getErrors();
-  } else {
-    return "OK";
-  }
-});
+// Route::post("/asd/qwe/{id}", function () {
+//   $validate = new Validate(true);
+//   $validate->get("some", false)->number()->decimal();
+//   $validate->get("email")->string()->email();
+//   if ($validate->hasErrors()) {
+//     return $validate->getErrors();
+//   } else {
+//     return "OK";
+//   }
+// });
 
 // Route::put("/asd/qwe/{id}", function ($id) {
 //   global $_PUT, $_PARAMS;
