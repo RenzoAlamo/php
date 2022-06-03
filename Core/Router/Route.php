@@ -157,10 +157,10 @@ class Route
       "method" => $method,
       "path" => $path,
       "action" => $action,
-      "params" => array_reduce($params, function ($previous, $current) use ($generic_regex) {
+      "params" => count($params) > 0 ? array_reduce($params, function ($previous, $current) use ($generic_regex) {
         $previous[$current] = $generic_regex;
         return $previous;
-      }, [])
+      }, []) : [],
     ];
     $changeRegex = function ($param, $regex) use ($method, $path) {
       if (
