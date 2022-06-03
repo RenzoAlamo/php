@@ -9,7 +9,7 @@ class Method
 
   private $method, $key;
   private $value;
-  private $fnSetErrors;
+  private $setErrors;
 
   /**
    * @param string $method
@@ -21,7 +21,7 @@ class Method
     $this->method = $method;
     $this->key = $data["key"];
     $this->value = $data["value"];
-    $this->fnSetErrors = $setErrors;
+    $this->setErrors = $setErrors;
   }
 
   /**
@@ -38,7 +38,7 @@ class Method
         if (strlen(trim($errorMessage)) === 0) {
           $errorMessage = "El campo {$this->key} debe ser un número.";
         }
-        $this->setErrors()($this->method, $this->key, $errorMessage);
+        ($this->setErrors)($this->method, $this->key, $errorMessage);
       } else {
         if (strpos($this->value, ".") !== false) {
           $this->value = floatval($this->value);
@@ -48,7 +48,7 @@ class Method
         $valid = true;
       }
     }
-    return new ValidateNumber($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->fnSetErrors);
+    return new ValidateNumber($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->setErrors);
   }
 
   /**
@@ -65,19 +65,11 @@ class Method
         if (strlen(trim($errorMessage)) === 0) {
           $errorMessage = "El campo {$this->key} debe ser una cadena de texto.";
         }
-        $this->setErrors()($this->method, $this->key, $errorMessage);
+        ($this->setErrors)($this->method, $this->key, $errorMessage);
       } else {
         $valid = true;
       }
     }
-    return new ValidateString($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->fnSetErrors);
-  }
-
-  /**
-   * @return Closure
-   */
-  private function setErrors()
-  {
-    return $this->fnSetErrors;
+    return new ValidateString($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->setErrors);
   }
 }

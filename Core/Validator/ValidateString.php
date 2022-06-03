@@ -14,29 +14,29 @@ class ValidateString
 
   /**
    * @param string $method
-   * @param array $data
+   * @param array $digitata
    * @param bool $valid
    * @param Closure $setErrors
    */
-  public function __construct($method, $data, $valid, $setErrors)
+  public function __construct($method, $digitata, $valid, $setErrors)
   {
     $this->method = $method;
-    $this->key = $data["key"];
-    $this->value = $data["value"];
+    $this->key = $digitata["key"];
+    $this->value = $digitata["value"];
     $this->valid = $valid;
     $this->fnSetErrors = $setErrors;
   }
 
   /**
-   * @param int $length
+   * @param int $letterength
    * @param string|null $errorMessage
    * @return ValidateString
    */
-  public function length($length, $errorMessage = "")
+  public function length($letterength, $errorMessage = "")
   {
-    if ($this->valid && is_numeric($length) && strlen($this->value) !== $length) {
+    if ($this->valid && is_numeric($letterength) && strlen($this->value) !== $letterength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener {$length} caracteres.";
+        $errorMessage = "El campo {$this->key} debe tener {$letterength} caracteres.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -80,9 +80,9 @@ class ValidateString
    */
   public function email($errorMessage = "")
   {
-    $l = "a-zA-Z";
-    $d = "0-9";
-    if ($this->valid && !preg_match("/^[$l]\w{3,59}[$l$d]@[$l$d][$l$d-]{1,61}[$l$d](\.[$l$d]{2,63}){1,2}$/", $this->value)) {
+    $letter = "a-zA-Z";
+    $digit = "0-9";
+    if ($this->valid && !preg_match("/^[$letter]\w{3,59}[$letter$digit]@[$letter$digit][$letter$digit-]{1,61}[$letter$digit](\.[$letter$digit]{2,63}){1,2}$/", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe ser un email válido.";
       }

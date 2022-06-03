@@ -10,7 +10,7 @@ class ValidateNumber
   private $method, $key;
   /**  @var int|float|null */ private $value;
   private $isDecimal, $valid;
-  private $fnSetErrors;
+  private $setErrors;
 
   /**
    * @param string $method
@@ -25,7 +25,7 @@ class ValidateNumber
     $this->value = $data["value"];
     $this->isDecimal = is_double($this->value);
     $this->valid = $valid;
-    $this->fnSetErrors = $setErrors;
+    $this->setErrors = $setErrors;
   }
 
   /**
@@ -39,7 +39,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe ser mayor o igual a {$min}.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -56,7 +56,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe ser menor o igual a {$max}.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -72,7 +72,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe tener {$length} caracteres.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -88,7 +88,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe tener una longitud de al menos {$minLength}.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -104,7 +104,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe tener una longitud de no más de {$maxLength} dígitos.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -121,7 +121,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe estar entre {$min} y {$max}.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -136,7 +136,7 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe ser un número decimal.";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
   }
@@ -152,16 +152,8 @@ class ValidateNumber
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
         $errorMessage = "El campo {$this->key} debe ser uno de los siguientes valores: " . implode(", ", $values) . ".";
       }
-      $this->setErrors()($this->method, $this->key, $errorMessage);
+      ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
     return $this;
-  }
-
-  /**
-   * @return Closure
-   */
-  private function setErrors()
-  {
-    return $this->fnSetErrors;
   }
 }

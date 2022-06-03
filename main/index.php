@@ -2,22 +2,22 @@
 
 require_once __DIR__ . "/../Config/autoload.php";
 
-use Core\Router;
+use Core\Router\Route;
 use Core\Validator\Validate;
 use Core\View;
 
-Router::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
-Router::staticResource("js", "/index.script", "Error.js");
-Router::staticResource("img", "/index.image", "wallet_1.gif");
+Route::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
+Route::staticResource("js", "/index.script", "Error.js");
+Route::staticResource("img", "/index.image", "wallet_1.gif");
 
-Router::get("/", function () {
+Route::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
   // return View::render("index");
   // return $_SERVER;
-  return array_keys(Router::getRoutes());
+  return array_keys(Route::getRoutes());
 });
 
-Router::get("/contact", function () {
+Route::get("/contact", function () {
   $validate = new Validate();
   $validate->get("age")->number()->min(1);
   $validate->get("name")->string()->minLength(3);
@@ -29,47 +29,47 @@ Router::get("/contact", function () {
   }
 });
 
-Router::prefix("/api", function () {
-  Router::get("/", function () {
+Route::prefix("/api", function () {
+  Route::get("/", function () {
     return "API";
   });
-  Router::prefix("/user", function () {
-    Router::get("/", function () {
+  Route::prefix("/user", function () {
+    Route::get("/", function () {
       return "User";
     });
-    Router::get("/{id:(\d+)}", function ($id) {
+    Route::get("/{id:(\d+)}", function ($id) {
       return "User $id";
     });
-    Router::post("/", function () {
+    Route::post("/", function () {
       return "User";
     });
-    Router::put("/{id:(\d+)}", function ($id) {
+    Route::put("/{id:(\d+)}", function ($id) {
       return "User $id";
     });
-    Router::delete("/{id:(\d+)}", function ($id) {
+    Route::delete("/{id:(\d+)}", function ($id) {
       return "User $id";
     });
-    Router::prefix("/posts", function () {
-      Router::get("/", function ($id) {
+    Route::prefix("/posts", function () {
+      Route::get("/", function ($id) {
         return "User $id";
       });
-      Router::get("/{id:(\d+)}", function ($id) {
+      Route::get("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
-      Router::post("/", function ($id) {
+      Route::post("/", function ($id) {
         return "User $id";
       });
-      Router::put("/{id:(\d+)}", function ($id) {
+      Route::put("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
-      Router::delete("/{id:(\d+)}", function ($id) {
+      Route::delete("/{id:(\d+)}", function ($id) {
         return "User $id";
       });
     });
   });
 });
 
-Router::post("/asd/qwe/{id}", function ($id) {
+Route::post("/asd/qwe/{id}", function ($id) {
   $validate = new Validate(true);
   $validate->get("some", false)->number()->decimal();
   $validate->get("email")->string()->email();
@@ -80,14 +80,14 @@ Router::post("/asd/qwe/{id}", function ($id) {
   }
 });
 
-Router::put("/asd/qwe/{id}", function ($id) {
+Route::put("/asd/qwe/{id}", function ($id) {
   global $_PUT, $_PARAMS;
   return ["method" => "PUT", '$_PARAMS' => $_PARAMS, '$_PUT' => $_PUT];
 });
 
-Router::delete("/asd/qwe/{id}", function ($id) {
+Route::delete("/asd/qwe/{id}", function ($id) {
   global $_DELETE, $_PARAMS;
   return ["method" => "DELETE", '$_PARAMS' => $_PARAMS, '$_DELETE' => $_DELETE];
 });
 
-Router::run();
+Route::run();

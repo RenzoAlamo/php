@@ -1,10 +1,12 @@
 <?php
 
-namespace Core;
+namespace Core\Router;
 
 use Closure;
+use Core\Utils;
+use Validate;
 
-class Router
+class Route
 {
 
   private static $prefix = "";
@@ -137,22 +139,36 @@ class Router
    */
   private static function addRoute($method, $path, $action)
   {
-    $params = [];
     $path = self::$prefix . "/" . trim($path, " /");
     if (strlen($path) !== 1) {
       $path = rtrim($path, "/");
     }
-    // /{([a-zA-Z](\w*[a-zA-Z])?)}/g
-    $path = preg_replace_callback("/{((\w+)(:([^}]+))?)}/", function ($match) use (&$params) {
-      array_push($params, $match[2]);
-      return $match[4] ?? "([^\/]+)";
+    // /{((\w+)(:([^}]+))?)}/
+    $params = [];
+    $letter = "[a-zA-Z]";
+    $generic_regex = "([^/]+)";
+    $path = preg_replace_callback("/{($letter(\w*$letter)?)}/", function ($match) use (&$params, $generic_regex) {
+      [, $param] = $match;
+      array_push($params, $param);
+      return $generic_regex;
     }, $path);
     self::$routes["$method → $path"] = [
       "method" => $method,
       "path" => $path,
       "action" => $action,
-      "params" => $params
+      "params" => array_reduce($params, function ($previous, $current) use ($generic_regex) {
+        $previous[$current] = $generic_regex;
+        return $previous;
+      }, [])
     ];
+    $changeRegex = function ($param, $regex) use ($method, $path) {
+      if (
+        !isset(self::$routes["$method → $path"]["params"][$param]) ||
+        (!is_string($regex) || strlen(trim($regex)) === 0 || @preg_match("~$regex~", "") === false)
+      ) return;
+      self::$routes["$method → $path"]["params"][$param] = $regex;
+    };
+    return new Validate($changeRegex);
   }
 
   public static function hasRoute($method, $path)
@@ -168,7 +184,6 @@ class Router
   public static function run()
   {
     global $_PARAMS;
-    $_PARAMS = isset($_PARAMS) ? $_PARAMS : [];
 
     $method = strtoupper($_SERVER["REQUEST_METHOD"]);
     $_method = "_$method";
@@ -176,11 +191,35 @@ class Router
     $response = [];
 
     global $$_method;
-    $$_method = isset($$_method) ? $$_method : [];
+
+    $setError = function ($statusCode, $status) {
+      header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
+      if (Utils::isAJAXrequest()) {
+        echo json_encode(["statusCode" => $statusCode, "status" => $status]);
+      } else {
+        require_once root . "/Core/Views/Error.php";
+      }
+    };
+
+    $paramError = false;
 
     foreach (self::$routes as $route) {
       if (preg_match("~^{$route["path"]}$~", $path, $matches)) {
         array_shift($matches);
+        if (count($matches) > 0) {
+          $count = -1;
+          foreach ($route["params"] as $regex) {
+            $count += 1;
+            if (preg_match("~^$regex$~", $matches[$count]) === false) {
+              $paramError = true;
+              break;
+            }
+          }
+          if ($paramError) {
+            break;
+          }
+        }
+
         $response["params"] = $route["params"];
         $response["args"] = $matches;
         if ($route["method"] === $method) {
@@ -202,37 +241,21 @@ class Router
       }
     }
 
+
+    if ($paramError) {
+      $setError(400, "Bad Request");
+      return;
+    }
     if (!$response) {
-      $statusCode = 404;
-      $status = "Route Not Found";
-      header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
-      if (Utils::isAJAXrequest()) {
-        echo json_encode(["statusCode" => $statusCode, "status" => $status]);
-      } else {
-        require_once root . "/Core/Views/Error.php";
-      }
+      $setError(404, "Route Not Found");
       return;
     }
     if (!isset($response["method"])) {
-      $statusCode = 405;
-      $status = "Method Not Allowed";
-      header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
-      if (Utils::isAJAXrequest()) {
-        echo json_encode(["statusCode" => $statusCode, "status" => $status]);
-      } else {
-        require_once root . "/Core/Views/Error.php";
-      }
+      $setError(405, "Method Not Allowed");
       return;
     }
     if (!isset($response["callback"])) {
-      $statusCode = 500;
-      $status = "Internal Server Error";
-      header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
-      if (Utils::isAJAXrequest()) {
-        echo json_encode(["statusCode" => $statusCode, "status" => $status]);
-      } else {
-        require_once root . "/Core/Views/Error.php";
-      }
+      $setError(500, "Internal Server Error");
       return;
     }
     if ($response["params"] && (count($response["params"]) === count($response["args"]))) {
@@ -301,7 +324,6 @@ class Router
 
     $method = "_$method";
     global $$method;
-    $$method = isset($$method) ? $$method : [];
 
     $input = file_get_contents("php://input");
     $boundary = substr($input, 0, strpos($input, "\r\n"));
