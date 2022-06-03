@@ -122,11 +122,11 @@ class Route
         $content_type = mime_content_type($resource);
         $_MULTIMEDIA[$name] = $resource_url;
       }
-      die("die()");
       self::addRoute("GET", $path, function () use ($content_type, $contents) {
         header("Content-Type: $content_type");
         return implode("\n", $contents);
       });
+      die("die()");
     }
   }
 
