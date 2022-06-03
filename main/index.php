@@ -69,7 +69,7 @@ Route::prefix("/api", function () {
   // });
 });
 
-Route::post("/asd/qwe/{id}", function ($id) {
+Route::post("/asd/qwe/{id}", function () {
   $validate = new Validate(true);
   $validate->get("some", false)->number()->decimal();
   $validate->get("email")->string()->email();
