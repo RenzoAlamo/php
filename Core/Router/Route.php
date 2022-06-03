@@ -141,7 +141,6 @@ class Route
    */
   private static function addRoute($method, $path, $action)
   {
-    die("die()");
     $path = self::$prefix . "/" . trim($path, " /");
     if (strlen($path) !== 1) {
       $path = rtrim($path, "/");
@@ -150,6 +149,7 @@ class Route
     $params = [];
     $letter = "[a-zA-Z]";
     $generic_regex = "([^/]+)";
+    die("die()");
     $path = preg_replace_callback("/{($letter(\w*$letter)?)}/", function ($match) use (&$params, $generic_regex) {
       [, $param] = $match;
       array_push($params, $param);
