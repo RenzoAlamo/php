@@ -141,6 +141,7 @@ class Route
    */
   private static function addRoute($method, $path, $action)
   {
+    die("die()");
     $path = self::$prefix . "/" . trim($path, " /");
     if (strlen($path) !== 1) {
       $path = rtrim($path, "/");
@@ -203,7 +204,6 @@ class Route
       }
     };
 
-    die("die()");
     $paramError = false;
     foreach (self::$routes as $route) {
       if (preg_match("~^{$route["path"]}$~", $path, $matches)) {
