@@ -168,7 +168,6 @@ class Route
       ) return;
       self::$routes["$method → $path"]["params"][$param] = $regex;
     };
-    die("die()");
     return new Validate($changeRegex);
   }
 

@@ -29,45 +29,45 @@ Route::get("/contact", function () {
   }
 });
 
-Route::prefix("/api", function () {
-  Route::get("/", function () {
-    return "API";
-  });
-  // Route::prefix("/user", function () {
-  //   Route::get("/", function () {
-  //     return "User";
-  //   });
-  //   Route::get("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   Route::post("/", function () {
-  //     return "User";
-  //   });
-  //   Route::put("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   Route::delete("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   // Route::prefix("/posts", function () {
-  //   //   Route::get("/", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::get("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::post("/", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::put("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::delete("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   // });
-  // });
-});
+// Route::prefix("/api", function () {
+//   Route::get("/", function () {
+//     return "API";
+//   });
+//   // Route::prefix("/user", function () {
+//   //   Route::get("/", function () {
+//   //     return "User";
+//   //   });
+//   //   Route::get("/{id}", function ($id) {
+//   //     return "User $id";
+//   //   });
+//   //   Route::post("/", function () {
+//   //     return "User";
+//   //   });
+//   //   Route::put("/{id}", function ($id) {
+//   //     return "User $id";
+//   //   });
+//   //   Route::delete("/{id}", function ($id) {
+//   //     return "User $id";
+//   //   });
+//   //   // Route::prefix("/posts", function () {
+//   //   //   Route::get("/", function ($id) {
+//   //   //     return "User $id";
+//   //   //   });
+//   //   //   Route::get("/{id}", function ($id) {
+//   //   //     return "User $id";
+//   //   //   });
+//   //   //   Route::post("/", function ($id) {
+//   //   //     return "User $id";
+//   //   //   });
+//   //   //   Route::put("/{id}", function ($id) {
+//   //   //     return "User $id";
+//   //   //   });
+//   //   //   Route::delete("/{id}", function ($id) {
+//   //   //     return "User $id";
+//   //   //   });
+//   //   // });
+//   // });
+// });
 
 // Route::post("/asd/qwe/{id}", function () {
 //   $validate = new Validate(true);
