@@ -154,7 +154,6 @@ class Route
       array_push($params, $param);
       return $generic_regex;
     }, $path);
-    die("die()");
     self::$routes["$method → $path"] = [
       "method" => $method,
       "path" => $path,
@@ -164,6 +163,7 @@ class Route
         return $previous;
       }, [])
     ];
+    die("die()");
     $changeRegex = function ($param, $regex) use ($method, $path) {
       if (
         !isset(self::$routes["$method → $path"]["params"][$param]) ||
