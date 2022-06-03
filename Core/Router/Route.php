@@ -126,7 +126,6 @@ class Route
         header("Content-Type: $content_type");
         return implode("\n", $contents);
       });
-      die("die()");
     }
   }
 
@@ -204,6 +203,7 @@ class Route
       }
     };
 
+    die("die()");
     $paramError = false;
     foreach (self::$routes as $route) {
       if (preg_match("~^{$route["path"]}$~", $path, $matches)) {
