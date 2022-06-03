@@ -220,7 +220,7 @@ class Route
           }
         }
 
-        $response["params"] = $route["params"];
+        $response["params"] = array_keys($route["params"]);
         $response["args"] = $matches;
         if ($route["method"] === $method) {
           $response["method"] = $method;
