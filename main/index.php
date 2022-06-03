@@ -33,40 +33,40 @@ Route::prefix("/api", function () {
   Route::get("/", function () {
     return "API";
   });
-  // Route::prefix("/user", function () {
-  //   Route::get("/", function () {
-  //     return "User";
-  //   });
-  //   Route::get("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   Route::post("/", function () {
-  //     return "User";
-  //   });
-  //   Route::put("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   Route::delete("/{id}", function ($id) {
-  //     return "User $id";
-  //   });
-  //   // Route::prefix("/posts", function () {
-  //   //   Route::get("/", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::get("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::post("/", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::put("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   //   Route::delete("/{id}", function ($id) {
-  //   //     return "User $id";
-  //   //   });
-  //   // });
-  // });
+  Route::prefix("/user", function () {
+    Route::get("/", function () {
+      return "User";
+    });
+    Route::get("/{id}", function ($id) {
+      return "User $id";
+    })->where(["id" => "[0-9]+"]);
+    Route::post("/", function () {
+      return "User";
+    });
+    Route::put("/{id}", function ($id) {
+      return "User $id";
+    })->where(["id" => "[0-9]+"]);
+    Route::delete("/{id}", function ($id) {
+      return "User $id";
+    })->where(["id" => "[0-9]+"]);
+    Route::prefix("/posts", function () {
+      Route::get("/", function ($id) {
+        return "User $id";
+      });
+      Route::get("/{id}", function ($id) {
+        return "User $id";
+      })->where(["id" => "[0-9]+"]);
+      Route::post("/", function ($id) {
+        return "User $id";
+      });
+      Route::put("/{id}", function ($id) {
+        return "User $id";
+      })->where(["id" => "[0-9]+"]);
+      Route::delete("/{id}", function ($id) {
+        return "User $id";
+      })->where(["id" => "[0-9]+"]);
+    });
+  });
 });
 
 Route::post("/asd/qwe/{id}", function () {
