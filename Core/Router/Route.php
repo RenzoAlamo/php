@@ -165,7 +165,7 @@ class Route
     $changeRegex = function ($param, $regex) use ($method, $path) {
       if (
         !isset(self::$routes["$method → $path"]["params"][$param]) ||
-        (!is_string($regex) || strlen(trim($regex)) === 0 || @preg_match("~$regex~", "") === false)
+        (!is_string($regex) || strlen(trim($regex)) === 0 || preg_match("~$regex~", "") === false)
       ) return;
       self::$routes["$method → $path"]["params"][$param] = $regex;
     };
