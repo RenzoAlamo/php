@@ -149,12 +149,12 @@ class Route
     $params = [];
     $letter = "[a-zA-Z]";
     $generic_regex = "([^/]+)";
-    die("die()");
     $path = preg_replace_callback("/{($letter(\w*$letter)?)}/", function ($match) use (&$params, $generic_regex) {
       [, $param] = $match;
       array_push($params, $param);
       return $generic_regex;
     }, $path);
+    die("die()");
     self::$routes["$method → $path"] = [
       "method" => $method,
       "path" => $path,
