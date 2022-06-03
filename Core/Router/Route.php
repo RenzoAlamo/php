@@ -87,11 +87,13 @@ class Route
   {
     if (!is_array($resources)) return;
     if (!in_array($type, ["css", "js"]) && count($resources) !== 1) return;
+
     global $_STYLES, $_SCRIPTS, $_MULTIMEDIA;
     $contents = [];
     $name = preg_replace("%\/%", "_", trim($path, "/"));
     $path = "/" . trim($path, "/");
     $resource_url = base_folder . $path;
+
     if ($type === "css") {
       $folder = "css";
     } elseif ($type === "js") {
@@ -120,6 +122,7 @@ class Route
         $content_type = mime_content_type($resource);
         $_MULTIMEDIA[$name] = $resource_url;
       }
+      die("die()");
       self::addRoute("GET", $path, function () use ($content_type, $contents) {
         header("Content-Type: $content_type");
         return implode("\n", $contents);
