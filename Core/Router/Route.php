@@ -163,7 +163,6 @@ class Route
         return $previous;
       }, [])
     ];
-    die("die()");
     $changeRegex = function ($param, $regex) use ($method, $path) {
       if (
         !isset(self::$routes["$method → $path"]["params"][$param]) ||
@@ -171,6 +170,7 @@ class Route
       ) return;
       self::$routes["$method → $path"]["params"][$param] = $regex;
     };
+    die("die()");
     return new Validate($changeRegex);
   }
 
