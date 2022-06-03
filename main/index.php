@@ -37,35 +37,35 @@ Route::prefix("/api", function () {
     Route::get("/", function () {
       return "User";
     });
-    Route::get("/{id:(\d+)}", function ($id) {
+    Route::get("/{id}", function ($id) {
       return "User $id";
     });
     Route::post("/", function () {
       return "User";
     });
-    Route::put("/{id:(\d+)}", function ($id) {
+    Route::put("/{id}", function ($id) {
       return "User $id";
     });
-    Route::delete("/{id:(\d+)}", function ($id) {
+    Route::delete("/{id}", function ($id) {
       return "User $id";
     });
-    Route::prefix("/posts", function () {
-      Route::get("/", function ($id) {
-        return "User $id";
-      });
-      Route::get("/{id:(\d+)}", function ($id) {
-        return "User $id";
-      });
-      Route::post("/", function ($id) {
-        return "User $id";
-      });
-      Route::put("/{id:(\d+)}", function ($id) {
-        return "User $id";
-      });
-      Route::delete("/{id:(\d+)}", function ($id) {
-        return "User $id";
-      });
-    });
+    // Route::prefix("/posts", function () {
+    //   Route::get("/", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Route::get("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Route::post("/", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Route::put("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    //   Route::delete("/{id}", function ($id) {
+    //     return "User $id";
+    //   });
+    // });
   });
 });
 
