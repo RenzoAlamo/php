@@ -4,7 +4,6 @@ namespace Core\Router;
 
 use Closure;
 use Core\Utils;
-use Validate;
 
 class Route
 {

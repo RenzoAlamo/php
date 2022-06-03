@@ -1,5 +1,7 @@
 <?php
 
+namespace Core\Router;
+
 class Validate
 {
 
