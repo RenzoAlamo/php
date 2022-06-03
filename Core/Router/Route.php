@@ -202,7 +202,7 @@ class Route
     };
 
     $paramError = false;
-
+    die("die()");
     foreach (self::$routes as $route) {
       if (preg_match("~^{$route["path"]}$~", $path, $matches)) {
         array_shift($matches);
