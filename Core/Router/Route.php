@@ -163,12 +163,12 @@ class Route
         return $previous;
       }, []) : [],
     ];
-    $changeRegex = function ($param, $regex) use ($method, $path) {
+    $changeRegex = function ($param, $regex) use ($method, $original_path) {
       if (
-        !isset(self::$routes["$method → $path"]["params"][$param]) ||
+        !isset(self::$routes["$method → $original_path"]["params"][$param]) ||
         (!is_string($regex) || strlen(trim($regex)) === 0 || preg_match("~$regex~", "") === false)
       ) return;
-      self::$routes["$method → $path"]["params"][$param] = $regex;
+      self::$routes["$method → $original_path"]["params"][$param] = $regex;
       // self::$routes = array_reduce(self::$routes, function ($previous, $current) use ($method, $path, $param, $regex) {
       //   if ($current["method"] === $method && $current["path"] === $path) {
       //     $path = preg_replace("/\{$param\}/", "($regex)", $current["original_path"]);
