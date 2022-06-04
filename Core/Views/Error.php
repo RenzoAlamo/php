@@ -48,7 +48,7 @@
 </head>
 
 <body>
-  <div class=" container">
+  <div class="container">
     <div class="error">
       <div class="statusCode"><?= $statusCode; ?></div>
       <div class="status"><?= $status; ?></div>
