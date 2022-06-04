@@ -172,7 +172,7 @@ class Route
       // self::$routes["$method → $path"]["params"][$param] = $regex;
       self::$routes = array_reduce(self::$routes, function ($previous, $current) use ($method, $path, $param, $regex) {
         if ($current["method"] === $method && $current["path"] === $path) {
-          $path = preg_replace("/\{$param\}/", "($regex)", $current["original_path"]);
+          $path = preg_replace("\{$param\}", "($regex)", $current["original_path"]);
           $current["params"][$param] = $regex;
         }
         $previous["$method → $path"] = $current;
