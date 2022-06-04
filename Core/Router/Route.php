@@ -213,24 +213,23 @@ class Route
 
     $paramError = false;
     foreach (self::$routes as $route) {
-      if (preg_match("~^{$route["path"]}$~", $path, $matches)) {
-        array_shift($matches);
-        if (count($matches) > 0) {
+      if (preg_match("~^{$route["path"]}$~", $path, $args)) {
+        array_shift($args);
+        if (count($args) > 0) {
           $count = -1;
           foreach ($route["params"] as $regex) {
             $count += 1;
-            if (preg_match("~^$regex$~", $matches[$count]) === false) {
+            preg_match("~^$regex$~", $args[$count], $match);
+            if (count($match) === 0) {
               $paramError = true;
               break;
             }
           }
-          if ($paramError) {
-            break;
-          }
+          if ($paramError) break;
         }
 
         $response["params"] = array_keys($route["params"]);
-        $response["args"] = $matches;
+        $response["args"] = $args;
         if ($route["method"] === $method) {
           $response["method"] = $method;
           if (is_string($route["action"])) {
