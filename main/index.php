@@ -14,7 +14,7 @@ Route::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
   // return View::render("index");
   // return $_SERVER;
-  return array_keys(Route::getRoutes());
+  return Route::getRoutes();
   // return Route::getRoutes();
 });
 
