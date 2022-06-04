@@ -14,7 +14,8 @@ Route::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
   // return View::render("index");
   // return $_SERVER;
-  return Route::getRoutes();
+  return array_keys(Route::getRoutes());
+  // return Route::getRoutes();
 });
 
 Route::get("/contact", function () {
