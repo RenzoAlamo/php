@@ -178,7 +178,6 @@ class Route
         $previous["$method → $path"] = $current;
         return $previous;
       }, []);
-      echo json_encode(self::$routes, JSON_PRETTY_PRINT);
     };
     return new Validate($changeRegex);
   }

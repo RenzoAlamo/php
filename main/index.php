@@ -91,3 +91,5 @@ Route::delete("/asd/qwe/{id}", function ($id) {
 });
 
 Route::run();
+
+echo json_encode(Route::getRoutes());
