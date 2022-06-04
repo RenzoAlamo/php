@@ -145,6 +145,7 @@ class Route
       $path = rtrim($path, "/");
     }
     // /{((\w+)(:([^}]+))?)}/
+    $original_path = $path;
     $params = [];
     $letter = "[a-zA-Z]";
     $generic_regex = "([^/]+)";
@@ -163,12 +164,10 @@ class Route
       }, []) : [],
     ];
     $changeRegex = function ($param, $regex) use ($method, $path) {
-      print_r("one");
       if (
         !isset(self::$routes["$method → $path"]["params"][$param]) ||
         (!is_string($regex) || strlen(trim($regex)) === 0 || preg_match("~$regex~", "") === false)
       ) return;
-      print_r("two");
       self::$routes["$method → $path"]["params"][$param] = $regex;
     };
     return new Validate($changeRegex);
