@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../Config/autoload.php";
 
+use Core\Ascii;
 use Core\Router\Route;
 use Core\Validator\Validate;
 use Core\View;
