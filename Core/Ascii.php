@@ -409,10 +409,9 @@ class Ascii
 
   public static function findByCodes($codes)
   {
-    return array_reduce($codes, function ($previous, $current) {
-      $previous[] = self::findByCode($current);
-      return $previous;
-    }, []);
+    return array_map(function ($code) {
+      return self::findByCode($code);
+    }, $codes);
   }
 
   public static function specialLetters()
