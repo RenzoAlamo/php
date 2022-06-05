@@ -406,6 +406,10 @@ class Ascii
     return $response === false ? null : $response;
   }
 
+  /**
+   * @var string[] $codes
+   * @return array
+   */
   public static function findByCodes($codes)
   {
     return array_map(function ($code) {
