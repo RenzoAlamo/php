@@ -5,7 +5,7 @@ namespace Core;
 class Ascii
 {
 
-  private $ascii = [
+  private $asciI = [
     "1" => "☺",
     "2" => "☻",
     "3" => "♥",
@@ -397,12 +397,12 @@ class Ascii
    */
   public static function findByCode($code)
   {
-    return !isset(self::$ascii["$code"]) ? null : self::$ascii["$code"];
+    return !isset(self::$asciI["$code"]) ? null : self::$asciI["$code"];
   }
 
-  public static function findCodeByAscii($ascii)
+  public static function findCodeByAscii($asciI)
   {
-    $response = array_search($ascii, self::$ascii);
+    $response = array_search($asciI, self::$asciI);
     return $response === false ? null : $response;
   }
 
