@@ -426,6 +426,6 @@ class Ascii
     $a2 = ["0138", "0142", "0154", "0156", "0158", "0159"];
     $a3 = $startZero(array_diff(range(192, 221), [215, 216]));
     $a4 = $startZero(array_diff(range(223, 255), [247, 248, 254]));
-    return implode("", self::findByCodes(array_merge($a1, $a2, $a3, $a4)));
+    return self::findByCodes(array_merge($a1, $a2, $a3, $a4));
   }
 }
