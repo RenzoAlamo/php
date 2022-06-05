@@ -2,6 +2,8 @@
 
 namespace Core\Validator;
 
+use Core\Ascii;
+
 class Validate
 {
 
@@ -163,8 +165,9 @@ class Validate
    */
   private function getName($key)
   {
-    $letters = "[a-zA-Z]+";
-    preg_match("/^($letters(\.($letters))*)(:($letters))?$/", $key, $matches);
+    $letter = "a-zA-Z";
+    $accentedLetter = Ascii::getAccentedLetters();
+    preg_match("/^([$letter]+(\.([$letter]+))*)(:([$letter$accentedLetter]+( $letter$accentedLetter]+)*))?$/", $key, $matches);
     if (count($matches) === 0) return null;
     array_shift($matches);
     return isset($matches[4]) ? $matches[4] : (isset($matches[2]) ? $matches[2] : $matches[0]);

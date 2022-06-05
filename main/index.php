@@ -16,7 +16,7 @@ Route::get("/", function () {
   // return $_SERVER;
   // return Route::getRoutes();
   // return array_keys(Route::getRoutes());
-  return Ascii::specialLetters();
+  return Ascii::getAccentedLetters();
   // return Ascii::findByCode("128");
 });
 

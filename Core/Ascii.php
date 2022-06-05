@@ -424,7 +424,7 @@ class Ascii
     }, $codes);
   }
 
-  public static function specialLetters()
+  public static function getAccentedLetters()
   {
     $startZero = function ($codes) {
       return array_map(function ($code) {
