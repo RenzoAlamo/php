@@ -401,7 +401,7 @@ class Ascii
    */
   public static function findByCode($code)
   {
-    return !isset(self::$ascii[$code]) ? null : self::$ascii[$code];
+    return self::$ascii;
   }
 
   /**
