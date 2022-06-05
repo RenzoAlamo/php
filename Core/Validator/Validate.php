@@ -63,6 +63,26 @@ class Validate
   }
 
   /**
+   * @param string $key
+   * @param bool|string|array $validate
+   * @return Method
+   */
+  public function param($key, $validate)
+  {
+    return $this->dispatchMethod("PARAM", $key, $validate);
+  }
+
+  /**
+   * @param string $key
+   * @param bool|string|array $validate
+   * @return Method
+   */
+  public function file($key, $validate)
+  {
+    return $this->dispatchMethod("FILE", $key, $validate);
+  }
+
+  /**
    * @return bool
    */
   public function hasErrors()
@@ -102,27 +122,60 @@ class Validate
    */
   private function dispatchMethod($method, $key, $validate)
   {
-    // Function to set errors
     $setErrors = function ($method, $key, $errorMessage) {
       // Validating if the method is GET or any other method and GET, depending on the current method
-      $currentMethod = strtoupper($_SERVER["REQUEST_METHOD"]);
-      if (!in_array($method, ($currentMethod === "GET" ? [$currentMethod] : ["GET", $currentMethod]))) return;
-      // Set header error for invalid data in request header
-      if ($this->setHeaderError && !$this->headerError) {
-        $statusCode = 422;
-        $status = "Unprocessable Entity";
-        header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
-        $this->headerError = true;
-      }
-      // Set errors
-      if (!isset($this->errors[$method][$key])) {
-        $this->errors[$method][$key] = [$errorMessage];
-      } else {
-        $this->errors[$method][$key][] = $errorMessage;
-      }
+      $methods = ["PARAM", strtoupper($_SERVER["REQUEST_METHOD"])];
+      if ($methods[1] !== "GET") array_push($methods, "GET");
+      if (!in_array($method, $methods)) return;
+      $this->setErrors($method, $key, $errorMessage);
     };
 
-    // Validating if is required
+    [$required, $message] = $this->validateRequired($key, $validate);
+
+    $data = ["key" => $key];
+    $data["name"] = $this->getName($data["key"]);
+    $data["value"] = null;
+    if (!is_null($data["name"])) {
+      $_method = "_$method";
+      global $$_method;
+      $props = explode(".", $key);
+      foreach ($props as $prop) {
+        if (!isset($$_method[$prop])) {
+          if ($required) {
+            $setErrors($method, $key, $message);
+            $data["value"] = null;
+          }
+          break;
+        } else {
+          $data["value"] = $$_method[$prop];
+        }
+        if (count($props) > 1) {
+          $$_method = $$_method[$prop];
+        }
+      }
+    }
+    return new Method($method, $data, $setErrors);
+  }
+
+  /**
+   * @param string $key
+   * @return string|null
+   */
+  private function getName($key)
+  {
+    $letters = "[a-zA-Z]+";
+    preg_match("/^($letters(\.($letters))*)(:($letters))?$/", $key, $matches);
+    if (count($matches) === 0) return null;
+    array_shift($matches);
+    return isset($matches[4]) ? $matches[4] : (isset($matches[2]) ? $matches[2] : $matches[0]);
+  }
+
+  /**
+   * @param string $key
+   * @param bool|string|array $validate
+   */
+  private function validateRequired($key, $validate)
+  {
     $required = true;
     $message = "El campo $key es requerido.";
     if (is_array($validate)) {
@@ -139,35 +192,28 @@ class Validate
     } else if (is_bool($validate)) {
       $required = $validate;
     }
+    return [$required, $message];
+  }
 
-
-    $data = ["key" => $key, "value" => null];
-    $_method = "_$method";
-    global $$_method; // $_GET, $_POST, $_PUT, $_DELETE
-    $props = explode(".", $key); // Example: $_GET ["user.name"] => $_GET ["user"] ["name"]
-    if (count($props) === 1) {
-      if (!isset($$_method[$key])) { // If the key doesn't exists, set errors and set value to null
-        if ($required) {
-          $setErrors($method, $key, $message);
-          $data["value"] = null;
-        }
-      } else { // If the key exists, set value
-        $data["value"] = $$_method[$key];
-      }
-    } else {
-      foreach ($props as $index => $prop) {
-        if (!isset($$_method[$prop])) {
-          if ($required) {
-            $setErrors($method, $key, $message);
-            $data["value"] = null;
-          }
-          break;
-        } else {
-          $data["value"] = $$_method[$prop];
-        }
-        $$_method = $$_method[$prop];
-      }
+  /**
+   * @param string $method
+   * @param string $key
+   * @param string $errorMessage
+   */
+  private function setErrors($method, $key, $errorMessage)
+  {
+    // Set header error for invalid data in request header
+    if ($this->setHeaderError && !$this->headerError) {
+      $statusCode = 422;
+      $status = "Unprocessable Entity";
+      header("{$_SERVER["SERVER_PROTOCOL"]} $statusCode $status", true, $statusCode);
+      $this->headerError = true;
     }
-    return new Method($method, $data, $setErrors);
+    // Set errors
+    if (!isset($this->errors[$method][$key])) {
+      $this->errors[$method][$key] = [$errorMessage];
+    } else {
+      $this->errors[$method][$key][] = $errorMessage;
+    }
   }
 }

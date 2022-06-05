@@ -7,7 +7,7 @@ use Closure;
 class ValidateString
 {
 
-  private $method, $key;
+  private $method, $key, $name;
   /** @var string|null */ private $value;
   private $valid;
   private $fnSetErrors;
@@ -18,11 +18,12 @@ class ValidateString
    * @param bool $valid
    * @param Closure $setErrors
    */
-  public function __construct($method, $digitata, $valid, $setErrors)
+  public function __construct($method, $data, $valid, $setErrors)
   {
     $this->method = $method;
-    $this->key = $digitata["key"];
-    $this->value = $digitata["value"];
+    $this->key = (string) $data["key"];
+    $this->name = (string) $data["name"];
+    $this->value = $data["value"];
     $this->valid = $valid;
     $this->fnSetErrors = $setErrors;
   }
@@ -36,7 +37,7 @@ class ValidateString
   {
     if ($this->valid && is_numeric($letterength) && strlen($this->value) !== $letterength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener {$letterength} caracteres.";
+        $errorMessage = "El campo {$this->name} debe tener {$letterength} caracteres.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -52,7 +53,7 @@ class ValidateString
   {
     if ($this->valid && is_numeric($minLength) && strlen($this->value) < $minLength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener una longitud de al menos {$minLength} caracteres.";
+        $errorMessage = "El campo {$this->name} debe tener una longitud de al menos {$minLength} caracteres.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -68,7 +69,7 @@ class ValidateString
   {
     if ($this->valid && is_numeric($maxLength) && strlen($this->value) > $maxLength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener una longitud de no más de {$maxLength} caracteres.";
+        $errorMessage = "El campo {$this->name} debe tener una longitud de no más de {$maxLength} caracteres.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -84,7 +85,7 @@ class ValidateString
     $digit = "0-9";
     if ($this->valid && !preg_match("/^[$letter]\w{3,59}[$letter$digit]@[$letter$digit][$letter$digit-]{1,61}[$letter$digit](\.[$letter$digit]{2,63}){1,2}$/", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser un email válido.";
+        $errorMessage = "El campo {$this->name} debe ser un email válido.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -99,7 +100,7 @@ class ValidateString
     $s = "\s";
     if ($this->valid && preg_match("/$s/", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} no debe contener espacios.";
+        $errorMessage = "El campo {$this->name} no debe contener espacios.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -115,7 +116,7 @@ class ValidateString
     $s = "\s";
     if ($this->valid && preg_match("/$s$s/", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} no debe contener más de un espacio entre palabras.";
+        $errorMessage = "El campo {$this->name} no debe contener más de un espacio entre palabras.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -130,7 +131,7 @@ class ValidateString
   {
     if ($this->valid && preg_match("/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe contener solo letras.";
+        $errorMessage = "El campo {$this->name} debe contener solo letras.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -146,7 +147,7 @@ class ValidateString
     if ($this->valid) {
       if (!filter_var($this->value, FILTER_VALIDATE_URL)) {
         if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-          $errorMessage = "El campo {$this->key} debe ser una URL válida.";
+          $errorMessage = "El campo {$this->name} debe ser una URL válida.";
         }
         $this->setErrors()($this->method, $this->key, $errorMessage);
       }
@@ -162,7 +163,7 @@ class ValidateString
   {
     if ($this->valid && !$this->nameRegex("name", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser un nombre válido.";
+        $errorMessage = "El campo {$this->name} debe ser un nombre válido.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -176,7 +177,7 @@ class ValidateString
   {
     if ($this->valid && !$this->nameRegex("lastname", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser un apellido válido.";
+        $errorMessage = "El campo {$this->name} debe ser un apellido válido.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }
@@ -190,7 +191,7 @@ class ValidateString
   {
     if ($this->valid && !$this->nameRegex("fullname", $this->value)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser un nombre completo válido.";
+        $errorMessage = "El campo {$this->name} debe ser un nombre completo válido.";
       }
       $this->setErrors()($this->method, $this->key, $errorMessage);
     }

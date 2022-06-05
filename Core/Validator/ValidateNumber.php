@@ -7,7 +7,7 @@ use Closure;
 class ValidateNumber
 {
 
-  private $method, $key;
+  private $method, $key, $name;
   /**  @var int|float|null */ private $value;
   private $isDecimal, $valid;
   private $setErrors;
@@ -22,6 +22,7 @@ class ValidateNumber
   {
     $this->method = $method;
     $this->key = (string) $data["key"];
+    $this->name = (string) $data["name"];
     $this->value = $data["value"];
     $this->isDecimal = is_double($this->value);
     $this->valid = $valid;
@@ -37,7 +38,7 @@ class ValidateNumber
   {
     if ($this->valid && $this->value < $min) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser mayor o igual a {$min}.";
+        $errorMessage = "El campo {$this->name} debe ser mayor o igual a {$min}.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -54,7 +55,7 @@ class ValidateNumber
   {
     if ($this->valid && $this->value > $max) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser menor o igual a {$max}.";
+        $errorMessage = "El campo {$this->name} debe ser menor o igual a {$max}.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -70,7 +71,7 @@ class ValidateNumber
   {
     if ($this->valid && !$this->isDecimal && strlen(strval($this->value)) !== $length) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener {$length} caracteres.";
+        $errorMessage = "El campo {$this->name} debe tener {$length} caracteres.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -86,7 +87,7 @@ class ValidateNumber
   {
     if ($this->valid && !$this->isDecimal && strlen(strval($this->value)) < $minLength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener una longitud de al menos {$minLength}.";
+        $errorMessage = "El campo {$this->name} debe tener una longitud de al menos {$minLength}.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -102,7 +103,7 @@ class ValidateNumber
   {
     if ($this->valid && !$this->isDecimal && strlen(strval($this->value)) > $maxLength) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe tener una longitud de no más de {$maxLength} dígitos.";
+        $errorMessage = "El campo {$this->name} debe tener una longitud de no más de {$maxLength} dígitos.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -119,7 +120,7 @@ class ValidateNumber
   {
     if ($this->valid && ($this->value < $min || $this->value > $max)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe estar entre {$min} y {$max}.";
+        $errorMessage = "El campo {$this->name} debe estar entre {$min} y {$max}.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -134,7 +135,7 @@ class ValidateNumber
   {
     if ($this->valid && !$this->isDecimal) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser un número decimal.";
+        $errorMessage = "El campo {$this->name} debe ser un número decimal.";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }
@@ -150,7 +151,7 @@ class ValidateNumber
   {
     if ($this->valid && !in_array($this->value, $values)) {
       if (!is_string($errorMessage) || strlen(trim($errorMessage)) === 0) {
-        $errorMessage = "El campo {$this->key} debe ser uno de los siguientes valores: " . implode(", ", $values) . ".";
+        $errorMessage = "El campo {$this->name} debe ser uno de los siguientes valores: " . implode(", ", $values) . ".";
       }
       ($this->setErrors)($this->method, $this->key, $errorMessage);
     }

@@ -7,7 +7,8 @@ use Closure;
 class Method
 {
 
-  private $method, $key;
+  private $method, $key, $name;
+  private $data;
   private $value;
   private $setErrors;
 
@@ -19,7 +20,9 @@ class Method
   public function __construct($method, $data, $setErrors)
   {
     $this->method = $method;
-    $this->key = $data["key"];
+    $this->data = $data;
+    $this->key = (string) $data["key"];
+    $this->name = (string) $data["name"];
     $this->value = $data["value"];
     $this->setErrors = $setErrors;
   }
@@ -36,7 +39,7 @@ class Method
       global $$_method;
       if (!is_numeric($this->value)) {
         if (strlen(trim($errorMessage)) === 0) {
-          $errorMessage = "El campo {$this->key} debe ser un número.";
+          $errorMessage = "El campo {$this->name} debe ser un número.";
         }
         ($this->setErrors)($this->method, $this->key, $errorMessage);
       } else {
@@ -48,7 +51,7 @@ class Method
         $valid = true;
       }
     }
-    return new ValidateNumber($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->setErrors);
+    return new ValidateNumber($this->method, $this->data, $valid, $this->setErrors);
   }
 
   /**
@@ -63,13 +66,13 @@ class Method
       global $$_method;
       if (!is_string($this->value)) {
         if (strlen(trim($errorMessage)) === 0) {
-          $errorMessage = "El campo {$this->key} debe ser una cadena de texto.";
+          $errorMessage = "El campo {$this->name} debe ser una cadena de texto.";
         }
         ($this->setErrors)($this->method, $this->key, $errorMessage);
       } else {
         $valid = true;
       }
     }
-    return new ValidateString($this->method, ["key" => $this->key, "value" => $this->value], $valid, $this->setErrors);
+    return new ValidateString($this->method, $this->data, $valid, $this->setErrors);
   }
 }
