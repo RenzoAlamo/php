@@ -9,7 +9,6 @@ use Core\View;
 Route::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
 Route::staticResource("js", "/index.script", "Error.js");
 Route::staticResource("img", "/index.image", "wallet_1.gif");
-die("die()");
 
 Route::get("/", function () {
   // print_r("<h1>View INDEX</h1>");
@@ -19,6 +18,7 @@ Route::get("/", function () {
   // return Route::getRoutes();
   return Ascii::specialLetters();
 });
+die("die()");
 
 Route::get("/contact", function () {
   $validate = new Validate();
