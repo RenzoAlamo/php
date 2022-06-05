@@ -69,7 +69,7 @@ class Validate
    */
   public function param($key, $validate)
   {
-    return $this->dispatchMethod("PARAM", $key, $validate);
+    // return $this->dispatchMethod("PARAM", $key, $validate);
   }
 
   /**
@@ -79,7 +79,7 @@ class Validate
    */
   public function file($key, $validate)
   {
-    return $this->dispatchMethod("FILE", $key, $validate);
+    // return $this->dispatchMethod("FILE", $key, $validate);
   }
 
   /**
