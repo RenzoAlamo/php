@@ -397,10 +397,11 @@ class Ascii
 
   /**
    * @param string $code
-   * @return string
+   * @return string[]
    */
   public static function findByCode($code)
   {
+    // return !isset(self::$ascii[$code]) ? null : self::$ascii[$code];
     return self::$ascii;
   }
 
