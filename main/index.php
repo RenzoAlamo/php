@@ -6,6 +6,7 @@ use Core\Ascii;
 use Core\Router\Route;
 use Core\Validator\Validate;
 use Core\View;
+
 Route::staticResources("css", "/index.style", ["BackColor.css", "Error.css"]);
 Route::staticResource("js", "/index.script", "Error.js");
 Route::staticResource("img", "/index.image", "wallet_1.gif");
@@ -70,6 +71,12 @@ Route::prefix("/api", function () {
       })->where(["id" => "[0-9]+"]);
     });
   });
+});
+
+Route::get("some", function () {
+  if (isset($_GET["name"]) && ($name = $_GET["name"])) {
+    return $name;
+  }
 });
 
 Route::post("/asd/qwe/{id}", function () {
